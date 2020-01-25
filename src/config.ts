@@ -1,1 +1,2 @@
-export const BASE_URL: string = process.env.BASE_URL || 'http://localhost:4200';
+export const BASE_URL: string =
+         process.env.REACT_APP_BASE_URL || "http://localhost:4200";
