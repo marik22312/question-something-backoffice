@@ -16,12 +16,13 @@ import {
   TabPane,
   Alert
 } from "reactstrap";
-import Axios from "axios";
 
 import "./App.scss";
 import { BASE_URL } from "./config";
 import { ICategory, IQuestion, IUser } from "./interfaces";
 import { HeaderContainer } from './components/Header/Header.component';
+import { BaseApiService } from './services/base.api.service';
+import axiosInstance from './services/http.client';
 
 interface State {
   isLoading: boolean;
@@ -33,6 +34,8 @@ interface State {
   user: IUser | null;
 }
 export class App extends React.Component<{}, State> {
+	private readonly _http: BaseApiService;
+
   constructor(props: any) {
     super(props);
 
@@ -44,19 +47,21 @@ export class App extends React.Component<{}, State> {
       questions: [],
 	  error: null,
 	  user: null
-    };
+	};
+	this._http = new BaseApiService(axiosInstance)
   }
 
   private login = async (creds: LoginObject) => {
     this.setState({ isLoading: true });
     try {
-      const { data } = await Axios.post(BASE_URL + "/authenticate", creds);
+      const { data } = await this._http.post("/authenticate", creds);
       this.setState({
 			auth: data.token,
 			user: data.user
 		});
       await this.fetchData(data.token);
     } catch (error) {
+		console.log(error)
       this.setState({
         isLoading: false,
         error: error.response.data
@@ -82,19 +87,19 @@ export class App extends React.Component<{}, State> {
   }
 
   private fetchQuestions = async () => {
-    return Axios.get(BASE_URL + "/api/questions");
+    return this._http.get("/api/questions");
   };
   private fetchCategories = async () => {
-    return Axios.get(BASE_URL + "/api/categories");
+    return this._http.get("/api/categories");
   };
   private fetchDifficulties = async () => {
-    return Axios.get(BASE_URL + "/api/difficulties");
+    return this._http.get("/api/difficulties");
   };
 
   private onGoogleLogin = async (creds: GoogleLoginResponse) => {
     this.setState({ isLoading: true, error: null });
     try {
-      const { data } = await Axios.post(BASE_URL + "/google", creds.getAuthResponse());
+      const { data } = await this._http.post("/google", creds.getAuthResponse());
       this.setState({
 		auth: data.token,
 		user: data.user,
