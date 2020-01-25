@@ -21,8 +21,7 @@ script:
 deploy:
  provider: netlify
  site: team-appendix
- auth:
-  secure: "$NETLIFY_AUTH"
+ auth: $NETLIFY_AUTH
  edge: true
  on:
   branch: master
