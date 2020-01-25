@@ -17,11 +17,3 @@ install:
 
 script:
  - yarn test
-
-deploy:
- provider: netlify
- site: team-appendix
- auth: $NETLIFY_AUTH
- edge: true
- on:
-  branch: master
