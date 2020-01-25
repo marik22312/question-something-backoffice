@@ -19,7 +19,7 @@ export class CookieOven {
 	private cookies: Cookie;
 
 	constructor() {
-		this.cookies = new Cookie('radiosavta');
+		this.cookies = new Cookie('IceBreaker');
 	}
 
 	public clear(name: string, options?: CookieSetOptions) {

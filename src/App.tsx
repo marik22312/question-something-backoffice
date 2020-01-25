@@ -23,6 +23,7 @@ import { ICategory, IQuestion, IUser } from "./interfaces";
 import { HeaderContainer } from './components/Header/Header.component';
 import { BaseApiService } from './services/base.api.service';
 import axiosInstance from './services/http.client';
+import { CookieOven } from './services/CookieOven';
 
 interface State {
   isLoading: boolean;
@@ -35,6 +36,7 @@ interface State {
 }
 export class App extends React.Component<{}, State> {
 	private readonly _http: BaseApiService;
+	private readonly cookieOven: CookieOven;
 
   constructor(props: any) {
     super(props);
@@ -49,19 +51,22 @@ export class App extends React.Component<{}, State> {
 	  user: null
 	};
 	this._http = new BaseApiService(axiosInstance)
+	this.cookieOven = new CookieOven();
+  }
+
+  componentWillMount() {
+	  const authCookie = this.cookieOven.eatCookie("ICBRKR_AUTH");
+	  if (authCookie) {
+			this.setLoginData(authCookie);
+		}
   }
 
   private login = async (creds: LoginObject) => {
     this.setState({ isLoading: true });
     try {
       const { data } = await this._http.post("/authenticate", creds);
-      this.setState({
-			auth: data.token,
-			user: data.user
-		});
-      await this.fetchData(data.token);
+      this.setLoginData(data);
     } catch (error) {
-		console.log(error)
       this.setState({
         isLoading: false,
         error: error.response.data
@@ -100,11 +105,7 @@ export class App extends React.Component<{}, State> {
     this.setState({ isLoading: true, error: null });
     try {
       const { data } = await this._http.post("/google", creds.getAuthResponse());
-      this.setState({
-		auth: data.token,
-		user: data.user,
-      });
-      await this.fetchData(data.token);
+      this.setLoginData(data);
     } catch (error) {
       this.setState({
         isLoading: false,
@@ -112,6 +113,18 @@ export class App extends React.Component<{}, State> {
       });
     }
   };
+
+	private setLoginData = (data: any) => {
+		console.log(data.token)
+		this.setState({
+			auth: data.token,
+			user: data.user,
+		});
+		this.cookieOven.bakeCookie('ICBRKR_AUTH', data, {
+			maxAge: 60 * 24 * 14
+		});
+		this.fetchData(data.token);
+	}
 
   render() {
     return (
