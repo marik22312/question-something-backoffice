@@ -10,6 +10,7 @@ import {
 import * as Yup from "yup";
 
 import { Form, FormGroup, Label, Input, Button } from "reactstrap";
+import { GoogleLogin, GoogleLoginResponse } from 'react-google-login';
 
 import './Login.component.scss';
 
@@ -19,19 +20,14 @@ export interface LoginObject {
 }
 
 interface LoginFormProps {
-  onSubmit(credentials: LoginObject): void;
+	isLoading: boolean;
+  	onSubmit(credentials: LoginObject): void;
+  	onGoogleLogin(creds: GoogleLoginResponse): void;
 }
 
-interface LoginFormState {
-	isLoading: boolean
-}
-
-export class LoginForm extends React.Component<LoginFormProps, LoginFormState> {
+export class LoginForm extends React.Component<LoginFormProps, {}> {
          constructor(props: any) {
            super(props);
-           this.state = {
-             isLoading: false
-           };
          }
 
          public render() {
@@ -43,14 +39,23 @@ export class LoginForm extends React.Component<LoginFormProps, LoginFormState> {
                  onSubmit={this.onSubmit}
                  render={this.renderForm}
                />
+               <GoogleLogin
+                 onSuccess={e => {
+					const response = e as GoogleLoginResponse;
+					this.props.onGoogleLogin(response);
+				 }}
+                 onFailure={e => console.log("fail", e)}
+                 onRequest={() => console.log("req")}
+                 buttonText="Login With Google!"
+                 clientId="213253955091-4dhlkbdhv77m8fselfr48als82sqdj4h.apps.googleusercontent.com"
+				 cookiePolicy={"single_host_origin"}
+				 disabled={this.props.isLoading}
+               />
              </section>
            );
          }
 
          private onSubmit = (creds: LoginObject) => {
-           this.setState({
-             isLoading: true
-		   });
 		   this.props.onSubmit(creds)
          }
 
@@ -82,7 +87,7 @@ export class LoginForm extends React.Component<LoginFormProps, LoginFormState> {
                  />
                </FormGroup>
                <FormGroup row>
-                 <Button color={"primary"} onClick={formikProps.submitForm} disabled={this.state.isLoading}>
+                 <Button color={"primary"} onClick={formikProps.submitForm} disabled={this.props.isLoading}>
                    Submit
                  </Button>
                </FormGroup>

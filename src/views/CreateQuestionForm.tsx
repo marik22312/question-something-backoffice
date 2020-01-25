@@ -1,16 +1,26 @@
 import * as React from 'react';
+import { IQuestion } from '../interfaces';
 
-export class CreateQuestionForm extends React.Component {
+interface Props {
+	questions: IQuestion[];
+	isLoading: boolean;
+}
+export class CreateQuestionForm extends React.Component <Props, {}> {
 	constructor(props: any) {
 		super(props);
-		this.state = {
-			isLoading: false
-		};
+		this.state = {};
 	}
 
 	render() {
-		return (
-			<div>Question Submission Form!</div>
-		)
-	}
+             if (this.props.isLoading) {
+               return <div>Loading...</div>;
+             }
+             return (
+               <div>
+                 {this.props.questions.map(question => {
+                   return <div>{question.question}</div>;
+                 })}
+               </div>
+             );
+           }
 }
