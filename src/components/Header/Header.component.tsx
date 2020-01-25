@@ -25,7 +25,7 @@ export class HeaderContainer extends React.Component <Props, State> {
 			<header>
 				<Navbar color="dark" dark expand="md">
 					<NavbarBrand href="/">IceBreaker Backoffice</NavbarBrand>
-					<NavbarToggler onClick={() => this.setState({isOpen: true})} />
+					<NavbarToggler onClick={() => this.setState({isOpen: !this.state.isOpen})} />
 					<Collapse isOpen={this.state.isOpen} navbar>
 						<Nav className="mr-auto" navbar>
 							<UncontrolledDropdown nav inNavbar>
