@@ -13,6 +13,7 @@ import { Form, FormGroup, Label, Input, Button } from "reactstrap";
 import { GoogleLogin, GoogleLoginResponse } from 'react-google-login';
 
 import './Login.component.scss';
+import { GOOGLE_LOGIN_KEY } from '../../config';
 
 export interface LoginObject {
   email: string;
@@ -47,7 +48,7 @@ export class LoginForm extends React.Component<LoginFormProps, {}> {
                  onFailure={e => console.log("fail", e)}
                  onRequest={() => console.log("req")}
                  buttonText="Login With Google!"
-                 clientId="213253955091-4dhlkbdhv77m8fselfr48als82sqdj4h.apps.googleusercontent.com"
+                 clientId={GOOGLE_LOGIN_KEY}
 				 cookiePolicy={"single_host_origin"}
 				 disabled={this.props.isLoading}
                />
