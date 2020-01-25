@@ -20,7 +20,8 @@ import Axios from "axios";
 
 import "./App.scss";
 import { BASE_URL } from "./config";
-import { ICategory, IQuestion } from "./interfaces";
+import { ICategory, IQuestion, IUser } from "./interfaces";
+import { HeaderContainer } from './components/Header/Header.component';
 
 interface State {
   isLoading: boolean;
@@ -29,6 +30,7 @@ interface State {
   categories: ICategory[];
   questions: IQuestion[];
   error: any;
+  user: IUser | null;
 }
 export class App extends React.Component<{}, State> {
   constructor(props: any) {
@@ -40,7 +42,8 @@ export class App extends React.Component<{}, State> {
       activeTab: "1",
       categories: [],
       questions: [],
-      error: null
+	  error: null,
+	  user: null
     };
   }
 
@@ -49,13 +52,14 @@ export class App extends React.Component<{}, State> {
     try {
       const { data } = await Axios.post(BASE_URL + "/authenticate", creds);
       this.setState({
-        auth: data.token
-      });
+			auth: data.token,
+			user: data.user
+		});
       await this.fetchData(data.token);
     } catch (error) {
       this.setState({
         isLoading: false,
-        error: error
+        error: error.response.data
       });
     }
   };
@@ -72,7 +76,8 @@ export class App extends React.Component<{}, State> {
     this.setState({
       categories: categories.data.categories,
       questions: questions.data.questions,
-      isLoading: false
+	  isLoading: false,
+	  error: false
     });
   }
 
@@ -91,7 +96,8 @@ export class App extends React.Component<{}, State> {
     try {
       const { data } = await Axios.post(BASE_URL + "/google", creds.getAuthResponse());
       this.setState({
-        auth: data.token
+		auth: data.token,
+		user: data.user,
       });
       await this.fetchData(data.token);
     } catch (error) {
@@ -104,23 +110,29 @@ export class App extends React.Component<{}, State> {
 
   render() {
     return (
-      <Container>
-        <Row className="main-container">
-          <Col xs={8} className="main-view">
-            {this.state.auth ? (
-              <this.renderContent />
-            ) : (
-              <LoginForm
-			  	isLoading={this.state.isLoading}
-                onSubmit={this.login}
-                onGoogleLogin={this.onGoogleLogin}
-              />
-            )}
-			{this.state.error && <Alert color="danger">{this.state.error}</Alert>}
-          </Col>
-        </Row>
-      </Container>
-    );
+		<React.Fragment>
+			{this.state.user && <HeaderContainer user={this.state.user} />}
+			<h1 className="app-title">IceBreaker Backoffice</h1>
+			<Container>
+				<Row className="main-container">
+					<Col xs={8} className="main-view">
+						{this.state.auth ? (
+							<this.renderContent />
+						) : (
+							<LoginForm
+								isLoading={this.state.isLoading}
+								onSubmit={this.login}
+								onGoogleLogin={this.onGoogleLogin}
+							/>
+						)}
+						{this.state.error && (
+							<Alert color="danger">{this.state.error}</Alert>
+						)}
+					</Col>
+				</Row>
+			</Container>
+		</React.Fragment>
+	);
   }
 
   renderContent = () => {

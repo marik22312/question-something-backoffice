@@ -1,0 +1,18 @@
+header {
+	.header-container {
+		height: 50px;
+		background-color: #6FB98F;
+
+		box-shadow: 1px 1px 9px;
+
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.user-info {
+		.user-email {
+			margin: 0
+		}
+	}
+}
