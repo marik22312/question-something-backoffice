@@ -112,7 +112,6 @@ export class App extends React.Component<{}, State> {
     return (
 		<React.Fragment>
 			{this.state.user && <HeaderContainer user={this.state.user} />}
-			<h1 className="app-title">IceBreaker Backoffice</h1>
 			<Container>
 				<Row className="main-container">
 					<Col xs={8} className="main-view">
