@@ -21,7 +21,7 @@ script:
 deploy:
  provider: netlify
  site:
-	secure: "$NETLIFY_SITE_NAME"
+  secure: "$NETLIFY_SITE_NAME"
  auth:
   secure: "$NETLIFY_AUTH"
  edge: true
