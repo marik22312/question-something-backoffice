@@ -14,7 +14,6 @@ export class BaseApiService {
 	}
 
 	public post<T = any>(url: string, data?: any, config?: AxiosRequestConfig): Promise<AxiosResponse<T>>{
-		console.log('URL: ', BASE_URL + url)
 		return this._httpClient.post(BASE_URL + url, data, config);
 	}
 

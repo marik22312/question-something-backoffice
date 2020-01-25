@@ -115,7 +115,6 @@ export class App extends React.Component<{}, State> {
   };
 
 	private setLoginData = (data: any) => {
-		console.log(data.token)
 		this.setState({
 			auth: data.token,
 			user: data.user,
