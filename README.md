@@ -1,44 +1,44 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Welcome to question-something-backoffice 👋
+![Version](https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000)
+![Prerequisite](https://img.shields.io/badge/node-%3E%3D8.0.0%20%3C11.0.0-blue.svg)
+[![Twitter: marik_sh](https://img.shields.io/twitter/follow/marik_sh.svg?style=social)](https://twitter.com/marik_sh)
 
-## Available Scripts
+> A simple backoffice app for [Question something API](https://github.com/marik22312/question-something-api)
 
-In the project directory, you can run:
+### 🏠 [Homepage](https://github.com/marik22312/question-something-backoffice)
 
-### `yarn start`
+## Prerequisites
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- node >=8.0.0 <11.0.0
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+## Install
 
-### `yarn test`
+```sh
+yarn install
+```
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Usage
+ 
+```sh
+yarn start
+```
+## Author
 
-### `yarn build`
+👤 **Marik Shnitman <mark22312@gmail.com>**
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+* Twitter: [@marik_sh](https://twitter.com/marik_sh)
+* Github: [@marik22312](https://github.com/marik22312)
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+## 🤝 Contributing
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Contributions, issues and feature requests are welcome!
 
-### `yarn eject`
+Feel free to check [issues page](https://github.com/marik22312/question-something-api/issues).
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Show your support
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Give a ⭐️ if this project helped you!
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+***
+_This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_
