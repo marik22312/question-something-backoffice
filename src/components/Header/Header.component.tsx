@@ -3,6 +3,7 @@ import { IUser } from '../../interfaces';
 import { Navbar, NavbarBrand, NavbarToggler, Nav, NavItem, NavLink, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem, Collapse, NavbarText } from 'reactstrap';
 
 import './Header.component.scss';
+import { Link as RouterLink } from 'react-router-dom';
 
 interface Props {
 	user: IUser;
@@ -24,8 +25,14 @@ export class HeaderContainer extends React.Component <Props, State> {
 		return (
 			<header>
 				<Navbar color="dark" dark expand="md">
-					<NavbarBrand href="/">IceBreaker Backoffice</NavbarBrand>
-					<NavbarToggler onClick={() => this.setState({isOpen: !this.state.isOpen})} />
+					<NavbarBrand to="/" tag={RouterLink}>
+						IceBreaker Backoffice
+					</NavbarBrand>
+					<NavbarToggler
+						onClick={() =>
+							this.setState({ isOpen: !this.state.isOpen })
+						}
+					/>
 					<Collapse isOpen={this.state.isOpen} navbar>
 						<Nav className="mr-auto" navbar>
 							<UncontrolledDropdown nav inNavbar>
@@ -33,8 +40,12 @@ export class HeaderContainer extends React.Component <Props, State> {
 									Questions
 								</DropdownToggle>
 								<DropdownMenu right>
-									<DropdownItem>View</DropdownItem>
-									<DropdownItem>Create</DropdownItem>
+									<DropdownItem
+										to="/questions"
+										tag={RouterLink}
+									>
+										View
+									</DropdownItem>
 								</DropdownMenu>
 							</UncontrolledDropdown>
 							<UncontrolledDropdown nav inNavbar>
