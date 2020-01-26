@@ -35,11 +35,11 @@ export class LoginForm extends React.Component<LoginFormProps, {}> {
            const initialValues: LoginObject = { email: "", password: "" };
            return (
              <section id="login">
-               <Formik
+               {/* <Formik
                  initialValues={initialValues}
                  onSubmit={this.onSubmit}
                  render={this.renderForm}
-               />
+               /> */}
                <GoogleLogin
                  onSuccess={e => {
 					const response = e as GoogleLoginResponse;
@@ -53,8 +53,8 @@ export class LoginForm extends React.Component<LoginFormProps, {}> {
 				 disabled={this.props.isLoading}
                />
              </section>
-           );
-         }
+		   )
+		 }
 
          private onSubmit = (creds: LoginObject) => {
 		   this.props.onSubmit(creds)
