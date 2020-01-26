@@ -1,23 +1,7 @@
 import React from "react";
 import { Provider } from "mobx-react";
-import { LoginForm } from "./views/Login/Login.component";
-
-import {
-	Container,
-	Row,
-	Col,
-	Nav,
-	NavItem,
-	NavLink,
-	TabContent,
-	TabPane,
-	Alert
-} from "reactstrap";
 
 import "./App.scss";
-import { BASE_URL } from "./config";
-import { ICategory, IQuestion, IUser } from "./interfaces";
-import { HeaderContainer } from "./components/Header/Header.component";
 import { BaseApiService } from "./services/base.api.service";
 import axiosInstance from "./services/http.client";
 import { CookieOven } from "./services/CookieOven";
@@ -26,16 +10,24 @@ import IdentityStore from "./stores/identity.store";
 import Routes from "./Routes";
 import { QuestionsStore } from './stores/questions.store';
 import { QuestionsService } from './services/questions.service';
+import { CategoriesStore } from './stores/categories.store';
+import { CategoriesService } from './services/categories.service';
+import { DifficultiesService } from './services/difficulties.service';
+import { DifficultiesStore } from './stores/difficulties.store';
 
 interface State {}
 
 const cookieOven = new CookieOven();
 const identityService = new IdentityService(axiosInstance, cookieOven);
-const questionsService = new QuestionsService(axiosInstance)
+const questionsService = new QuestionsService(axiosInstance);
+const categoriesService = new CategoriesService(axiosInstance);
+const difficultiesService = new DifficultiesService(axiosInstance);
 
 const stores = {
 	identityStore: new IdentityStore(identityService),
-	questionsStore: new QuestionsStore(questionsService)
+	questionsStore: new QuestionsStore(questionsService),
+	categoriesStore: new CategoriesStore(categoriesService),
+	difficultiesStore: new DifficultiesStore(difficultiesService)
 };
 export class App extends React.Component<{}, State> {
 	private readonly _http: BaseApiService;

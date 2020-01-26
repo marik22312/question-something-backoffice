@@ -4,7 +4,7 @@ export interface IDifficulty {
 }
 
 export interface ICategory {
-	_id: string;
+	_id?: string;
 	key: string;
 	difficulties: IDifficulty[];
 	icon: string;

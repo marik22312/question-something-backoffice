@@ -54,7 +54,12 @@ export class HeaderContainer extends React.Component <Props, State> {
 								</DropdownToggle>
 								<DropdownMenu right>
 									<DropdownItem>View</DropdownItem>
-									<DropdownItem>Create</DropdownItem>
+									<DropdownItem
+										to="/categories/create"
+										tag={RouterLink}
+									>
+										Create
+									</DropdownItem>
 								</DropdownMenu>
 							</UncontrolledDropdown>
 						</Nav>
