@@ -6,6 +6,7 @@ import { QuestionsStore } from "../../stores/questions.store";
 import { FullPageLoader } from "../../components/Loaders/FullPageLoader.component";
 import { Page } from "../../components/Page/Page.component";
 import { QuestionCard } from "../../components/QuestionCard/QuestionCard.component";
+import { getRandomColor } from '../../utils/colorGen';
 
 interface Props extends BrowserRouterProps {
 	identityStore: IdentityStore;
@@ -49,6 +50,7 @@ export class QuestionsPage extends React.Component<Props, State> {
 					<div className="d-flex flex-wrap">
 						{questions.map(question => (
 							<QuestionCard
+								color={getRandomColor()}
 								key={question._id}
 								question={question}
 								onClick={() => console.log('Click!')}

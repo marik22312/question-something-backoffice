@@ -1,33 +1,35 @@
 import * as React from "react";
 import { QuestionCardBase, QuestionCardTitleBase } from "./QuestionCard.styled";
 import { IQuestion } from "../../interfaces";
+import { Collapse } from 'reactstrap';
 
 interface Props {
 	question: IQuestion;
+	color: string;
 	onClick(): void;
 }
-interface State {}
+interface State {
+	isOpen: boolean
+}
 
 export class QuestionCard extends React.PureComponent<Props, State> {
 	constructor(props: Props) {
 		super(props);
 
-		this.state = {};
+		this.state = {
+			isOpen: false
+		};
 	}
 
 	public render() {
 		const { question } = this.props;
-		return <QuestionCardBase color={getRandomColor()} onClick={this.props.onClick}>
+		return <QuestionCardBase color={this.props.color} onClick={() => this.setState({isOpen: !this.state.isOpen})}>
 			<QuestionCardTitleBase>
 				{question.question}
 			</QuestionCardTitleBase>
+			<Collapse isOpen={this.state.isOpen}>
+				{question._id}
+			</Collapse>
 		</QuestionCardBase>;
 	}
-}
-
-const colors = ['#6e5773', '#d45d79','#ea9085','#e9e2d0', '#f67280', '#c06c84', '#6c5b7b', '#35477d'];
-
-const getRandomColor = (): string => {
-	const number = Math.floor(Math.random() * colors.length);
-	return colors[number];
 }
