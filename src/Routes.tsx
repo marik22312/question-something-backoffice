@@ -23,15 +23,16 @@ import { CreateCategoryPage } from "./pages/categories-page/create-category.page
 const DefaultContainer: React.FC<{
 	isLoggedIn: boolean;
 	user: IUser | null;
+	identityStore: IdentityStore;
 }> = props => {
-	const { isLoggedIn, user } = props;
+	const { isLoggedIn, user , identityStore} = props;
 
 	if (!isLoggedIn || !user) {
 		return <Redirect to="/login" />;
 	}
 	return (
 		<main style={{ height: "100%" }}>
-			<HeaderContainer user={user} />
+			<HeaderContainer user={user} logout={identityStore.logout}/>
 			<div>
 				<Switch>
 					<Route path="/" exact component={HomePage} />
@@ -80,6 +81,7 @@ export default class Routes extends React.Component<Props, {}> {
 							<DefaultContainer
 								isLoggedIn={isLoggedIn}
 								user={user}
+								identityStore={identityStore!}
 							/>
 						)}
 					/>

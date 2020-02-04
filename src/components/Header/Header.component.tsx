@@ -1,12 +1,13 @@
 import * as React from 'react';
 import { IUser } from '../../interfaces';
-import { Navbar, NavbarBrand, NavbarToggler, Nav, NavItem, NavLink, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem, Collapse, NavbarText } from 'reactstrap';
+import { Navbar, NavbarBrand, NavbarToggler, Nav, NavItem, NavLink, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem, Collapse, NavbarText, Button } from 'reactstrap';
 
 import './Header.component.scss';
 import { Link as RouterLink } from 'react-router-dom';
 
 interface Props {
 	user: IUser;
+	logout(): void;
 }
 
 interface State {
@@ -64,6 +65,7 @@ export class HeaderContainer extends React.Component <Props, State> {
 							</UncontrolledDropdown>
 						</Nav>
 						<NavbarText>{this.props.user.email}</NavbarText>
+						{/* <Button style={{marginLeft: '10px'}} color="danger" onClick={this.props.logout}>Logout!</Button> */}
 					</Collapse>
 				</Navbar>
 			</header>

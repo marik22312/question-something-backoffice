@@ -12,22 +12,19 @@ export class CategoriesStore {
 		this.categories = [];
 	}
 
-	@observable
 
 	@action
 	public async init() {
-		console.log('INIT!');
-		const { data } = await this.getAll();
+		const { data } = await this.api.getAll();
 		this.categories = data.categories;
 		return;
 	}
 
-	private getAll() {
-		return this.api.getAll();
+	@action
+	public async create(category: ICategory): Promise<ICategory> {
+		const { data } = await this.api.create(category);
+		await this.init();
+		return data;
 	}
 
-	public async create(category: ICategory) {
-		const {data} = await this.api.create(category);
-		console.log(data);
-	}
 }
