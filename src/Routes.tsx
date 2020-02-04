@@ -15,6 +15,7 @@ import { IUser } from "./interfaces";
 import { QuestionsPage } from "./pages/questions-page/questions.page";
 import { CategoriesPage } from "./pages/categories-page/categories.page";
 import { CreateCategoryPage } from "./pages/categories-page/create-category.page";
+import { SingleQuestionPage } from './pages/questions-page/question.single.page';
 // import { SideNav } from "./components/Navbar/SideNav";
 // import { ProgramsPage } from "./pages/protected/programs-page/programs.page";
 // import { SettingsPage } from "./pages/protected/settings-page/settings.page";
@@ -37,6 +38,7 @@ const DefaultContainer: React.FC<{
 				<Switch>
 					<Route path="/" exact component={HomePage} />
 					<Route path="/questions" exact component={QuestionsPage} />
+					<Route path="/questions/:questionId" exact component={SingleQuestionPage} />
 					<Route
 						path="/categories"
 						exact

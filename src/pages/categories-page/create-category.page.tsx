@@ -1,15 +1,24 @@
 import * as React from "react";
 import { inject, observer } from "mobx-react";
 import { BrowserRouterProps } from "react-router-dom";
-import { Container, Row, Col, FormGroup, Label, Input, Button } from "reactstrap";
+import {
+	Container,
+	Row,
+	Col,
+	FormGroup,
+	Label,
+	Input,
+	Button
+} from "reactstrap";
 import { CategoriesStore } from "../../stores/categories.store";
-import { Formik, FormikProps, Form } from 'formik';
-import { ICategory } from '../../interfaces';
-import { DifficultiesStore } from '../../stores/difficulties.store';
-import { FullPageLoader } from '../../components/Loaders/FullPageLoader.component';
-import { InlineLoader } from '../../components/Loaders/InlineLoader.component';
+import { Formik, FormikProps, Form } from "formik";
+import { ICategory } from "../../interfaces";
+import { DifficultiesStore } from "../../stores/difficulties.store";
+import { FullPageLoader } from "../../components/Loaders/FullPageLoader.component";
+import { InlineLoader } from "../../components/Loaders/InlineLoader.component";
 
-import * as Yup from 'yup';
+import * as Yup from "yup";
+import { Page } from "../../components/Page/Page.component";
 
 interface Props extends BrowserRouterProps {
 	difficultiesStore: DifficultiesStore;
@@ -41,7 +50,7 @@ export class CreateCategoryPage extends React.Component<Props, State> {
 		this.setState({ isLoading: false });
 	}
 
-	private onSubmit = async  (category: ICategory) => {
+	private onSubmit = async (category: ICategory) => {
 		this.setState({ isLoading: true });
 		await this.props.categoriesStore.create(category);
 	};
@@ -73,25 +82,17 @@ export class CreateCategoryPage extends React.Component<Props, State> {
 			return <FullPageLoader />;
 		}
 		return (
-			<React.Fragment>
-				<Container>
-					<Row>
-						<Col xs={12}>Create Categorys</Col>
-					</Row>
-					<Row>
-						<Col xs={12}>
-							<div className="category-form-wrapper">
-								<Formik
-									initialValues={initialValues}
-									onSubmit={this.onSubmit}
-									render={this.renderForm}
-									// validationSchema={validationSchema}
-								/>
-							</div>
-						</Col>
-					</Row>
-				</Container>
-			</React.Fragment>
+			<Page>
+				<Page.Header title="Create Category" />
+				<Page.Body>
+					<Formik
+						initialValues={initialValues}
+						onSubmit={this.onSubmit}
+						render={this.renderForm}
+						// validationSchema={validationSchema}
+					/>
+				</Page.Body>
+			</Page>
 		);
 	}
 

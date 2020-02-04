@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Loader from 'react-loader-spinner';
+import { getRandomColor } from '../../utils/colorGen';
 
 export const FullPageLoader: React.FC<{}> = (props: any) => {
 	const style: React.CSSProperties = {
@@ -11,6 +12,6 @@ export const FullPageLoader: React.FC<{}> = (props: any) => {
 
 	}
 	return <div style={style}>
-		<Loader type="Rings" height={500} width={500}/>
+		<Loader type="Rings" height={500} width={500} color={getRandomColor()}/>
 		</div>;
 }
