@@ -13,7 +13,6 @@ export default class IdentityStore {
 
 	constructor(identityService: IdentityServiceInterface) {
 		this.identityService = identityService;
-		console.log('CNSTRCTR', this.identityService)
 
 		const authObj = this.identityService.getTokenFromStorage();
 		this.token = authObj?.token || null
@@ -76,7 +75,6 @@ export default class IdentityStore {
 	
 	@action
 	public async logout() {
-		console.log('LOGOUT!', this.identityService)
 		this.identityService.logout();
 		this.token = null;
 		this.user = null;

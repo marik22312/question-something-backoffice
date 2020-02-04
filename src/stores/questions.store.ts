@@ -16,7 +16,6 @@ export class QuestionsStore {
 
 	@action
 	public async init() {
-		console.log('INIT!');
 		const { data } = await this.getAll();
 		this.questions = data.questions;
 		return;

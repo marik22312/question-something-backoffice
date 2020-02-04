@@ -42,7 +42,6 @@ export class CreateCategoryPage extends React.Component<Props, State> {
 	}
 
 	private onSubmit = async  (category: ICategory) => {
-		console.log('Submit!')
 		this.setState({ isLoading: true });
 		await this.props.categoriesStore.create(category);
 	};

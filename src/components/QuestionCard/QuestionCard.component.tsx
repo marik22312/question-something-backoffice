@@ -6,7 +6,6 @@ import { Collapse } from 'reactstrap';
 interface Props {
 	question: IQuestion;
 	color: string;
-	onClick(): void;
 }
 interface State {
 	isOpen: boolean

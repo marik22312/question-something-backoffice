@@ -53,7 +53,6 @@ export class QuestionsPage extends React.Component<Props, State> {
 								color={getRandomColor()}
 								key={question._id}
 								question={question}
-								onClick={() => console.log('Click!')}
 							/>
 						))}
 					</div>
