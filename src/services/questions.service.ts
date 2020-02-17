@@ -20,6 +20,11 @@ export class QuestionsService extends BaseApiService {
 		return this.get(this.getFullUrl("/"));
 	}
 
+	public async bulkCreate(questions: any[]): Promise<IQuestion[]> {
+		const { data } = await this.post(this.getFullUrl('/bulk'), { questions });
+		return data;
+	}
+
 	private getFullUrl(path: string): string {
 		return this.ENDPOINT + path;
 	}

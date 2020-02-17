@@ -20,6 +20,11 @@ export class QuestionsStore {
 		this.questions = data.questions;
 		return;
 	}
+	
+	@action
+	public async BulkCreate(questions: any[]) {
+		return this.api.bulkCreate(questions);
+	}
 
 	private getAll() {
 		return this.api.getAll();

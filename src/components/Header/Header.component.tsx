@@ -47,6 +47,12 @@ export class HeaderContainer extends React.Component <Props, State> {
 									>
 										View
 									</DropdownItem>
+									<DropdownItem
+										to="/questions/createbulk"
+										tag={RouterLink}
+									>
+										Bulk Create
+									</DropdownItem>
 								</DropdownMenu>
 							</UncontrolledDropdown>
 							<UncontrolledDropdown nav inNavbar>
