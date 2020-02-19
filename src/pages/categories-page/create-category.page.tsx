@@ -1,15 +1,7 @@
 import * as React from "react";
 import { inject, observer } from "mobx-react";
 import { BrowserRouterProps } from "react-router-dom";
-import {
-	Container,
-	Row,
-	Col,
-	FormGroup,
-	Label,
-	Input,
-	Button
-} from "reactstrap";
+import { FormGroup, Label, Input, Button } from "reactstrap";
 import { CategoriesStore } from "../../stores/categories.store";
 import { Formik, FormikProps, Form } from "formik";
 import { ICategory } from "../../interfaces";
@@ -17,7 +9,7 @@ import { DifficultiesStore } from "../../stores/difficulties.store";
 import { FullPageLoader } from "../../components/Loaders/FullPageLoader.component";
 import { InlineLoader } from "../../components/Loaders/InlineLoader.component";
 
-import * as Yup from "yup";
+// import * as Yup from "yup";
 import { Page } from "../../components/Page/Page.component";
 
 interface Props extends BrowserRouterProps {
@@ -64,19 +56,19 @@ export class CreateCategoryPage extends React.Component<Props, State> {
 			icon: ""
 		};
 
-		const validationSchema = Yup.object().shape({
-			key: Yup.string()
-				.min(3)
-				.max(64)
-				.required(),
-			difficulties: Yup.array()
-				.min(1)
-				.required(),
-			string: Yup.string()
-				.min(3)
-				.max(64)
-				.required()
-		});
+		// const validationSchema = Yup.object().shape({
+		// 	key: Yup.string()
+		// 		.min(3)
+		// 		.max(64)
+		// 		.required(),
+		// 	difficulties: Yup.array()
+		// 		.min(1)
+		// 		.required(),
+		// 	string: Yup.string()
+		// 		.min(3)
+		// 		.max(64)
+		// 		.required()
+		// });
 
 		if (!categories.length || !difficulties.length) {
 			return <FullPageLoader />;

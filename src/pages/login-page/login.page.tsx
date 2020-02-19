@@ -1,9 +1,7 @@
 import * as React from "react";
 import { Container, Row, Col, Alert } from "reactstrap";
 import { LoginForm, LoginObject } from "../../views/Login/Login.component";
-import { BaseApiService } from "../../services/base.api.service";
 import { GoogleLoginResponse } from "react-google-login";
-import { CookieOven } from "../../services/CookieOven";
 import { RouteComponentProps } from "react-router-dom";
 import { inject, observer } from "mobx-react";
 import IdentityStore from "../../stores/identity.store";

@@ -1,6 +1,6 @@
 import * as React from "react";
 import { inject, observer } from "mobx-react";
-import { BrowserRouterProps } from "react-router-dom";
+import { RouteComponentProps } from "react-router-dom";
 import IdentityStore from "../../stores/identity.store";
 import { QuestionsStore } from "../../stores/questions.store";
 import { FullPageLoader } from "../../components/Loaders/FullPageLoader.component";
@@ -8,7 +8,7 @@ import { Page } from "../../components/Page/Page.component";
 import { QuestionCard } from "../../components/QuestionCard/QuestionCard.component";
 import { getRandomColor } from '../../utils/colorGen';
 
-interface Props extends BrowserRouterProps {
+interface Props extends RouteComponentProps {
 	identityStore: IdentityStore;
 	questionsStore: QuestionsStore;
 }
@@ -50,6 +50,7 @@ export class QuestionsPage extends React.Component<Props, State> {
 					<div className="d-flex flex-wrap">
 						{questions.map(question => (
 							<QuestionCard
+								onClick={() => this.props.history.push(`/questions/${question._id}`)}
 								color={getRandomColor()}
 								key={question._id}
 								question={question}

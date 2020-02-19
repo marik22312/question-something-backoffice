@@ -22,11 +22,17 @@ export class QuestionsStore {
 	}
 	
 	@action
+	public getById(questionId: string) {
+		return this.api.getById(questionId);
+	}
+	
+	@action
 	public async BulkCreate(questions: any[]) {
 		return this.api.bulkCreate(questions);
 	}
-
+	
 	private getAll() {
 		return this.api.getAll();
 	}
+
 }

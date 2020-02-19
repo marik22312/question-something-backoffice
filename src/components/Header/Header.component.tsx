@@ -1,9 +1,20 @@
-import * as React from 'react';
-import { IUser } from '../../interfaces';
-import { Navbar, NavbarBrand, NavbarToggler, Nav, NavItem, NavLink, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem, Collapse, NavbarText, Button } from 'reactstrap';
+import * as React from "react";
+import { IUser } from "../../interfaces";
+import {
+	Navbar,
+	NavbarBrand,
+	NavbarToggler,
+	Nav,
+	UncontrolledDropdown,
+	DropdownToggle,
+	DropdownMenu,
+	DropdownItem,
+	Collapse,
+	NavbarText,
+} from "reactstrap";
 
-import './Header.component.scss';
-import { Link as RouterLink } from 'react-router-dom';
+import "./Header.component.scss";
+import { Link as RouterLink } from "react-router-dom";
 
 interface Props {
 	user: IUser;
@@ -11,10 +22,10 @@ interface Props {
 }
 
 interface State {
-	isOpen: boolean
+	isOpen: boolean;
 }
 
-export class HeaderContainer extends React.Component <Props, State> {
+export class HeaderContainer extends React.Component<Props, State> {
 	constructor(props: Props) {
 		super(props);
 		this.state = {

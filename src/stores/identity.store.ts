@@ -1,22 +1,25 @@
-import { observable, action, computed } from 'mobx';
-import { IdentityServiceInterface, TryLogigArgs, LoginSuccessResponse } from '../services/identity.service';
-import { setToken } from '../services/http.client';
-import { AxiosError } from 'axios';
-import { GoogleLoginResponse } from 'react-google-login';
-import { IUser } from '../interfaces';
+import { observable, action, computed } from "mobx";
+import {
+	IdentityServiceInterface,
+	TryLogigArgs,
+	LoginSuccessResponse
+} from "../services/identity.service";
+import { setToken } from "../services/http.client";
+import { GoogleLoginResponse } from "react-google-login";
+import { IUser } from "../interfaces";
 
 export default class IdentityStore {
 	private identityService: IdentityServiceInterface;
 
 	@observable public token: string | null;
-	@observable public user: IUser | null ;
+	@observable public user: IUser | null;
 
 	constructor(identityService: IdentityServiceInterface) {
 		this.identityService = identityService;
 
 		const authObj = this.identityService.getTokenFromStorage();
-		this.token = authObj?.token || null
-		this.user = authObj?.user || null
+		this.token = authObj?.token || null;
+		this.user = authObj?.user || null;
 
 		if (this.token) {
 			this.setToken(this.token);
@@ -31,8 +34,10 @@ export default class IdentityStore {
 	@action
 	public async preformLogin(credentials: TryLogigArgs): Promise<void> {
 		try {
-			const {data} = await this.identityService.preformLogin(credentials);
-			this.onLoginSuccess(data)
+			const { data } = await this.identityService.preformLogin(
+				credentials
+			);
+			this.onLoginSuccess(data);
 		} catch (e) {
 			console.error(e);
 		}
@@ -72,12 +77,12 @@ export default class IdentityStore {
 	public setToken(token: string) {
 		return setToken(token);
 	}
-	
+
 	@action
 	public async logout() {
 		this.identityService.logout();
 		this.token = null;
 		this.user = null;
-		this.setToken('');
+		this.setToken("");
 	}
 }

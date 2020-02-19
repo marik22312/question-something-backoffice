@@ -1,14 +1,15 @@
 import * as React from "react";
 import { QuestionCardBase, QuestionCardTitleBase } from "./QuestionCard.styled";
 import { IQuestion } from "../../interfaces";
-import { Collapse } from 'reactstrap';
+import { Collapse } from "reactstrap";
 
 interface Props {
 	question: IQuestion;
 	color: string;
+	onClick?(e: any): void;
 }
 interface State {
-	isOpen: boolean
+	isOpen: boolean;
 }
 
 export class QuestionCard extends React.PureComponent<Props, State> {
@@ -22,13 +23,17 @@ export class QuestionCard extends React.PureComponent<Props, State> {
 
 	public render() {
 		const { question } = this.props;
-		return <QuestionCardBase color={this.props.color} onClick={() => this.setState({isOpen: !this.state.isOpen})}>
-			<QuestionCardTitleBase>
-				{question.question}
-			</QuestionCardTitleBase>
-			<Collapse isOpen={this.state.isOpen}>
-				{question._id}
-			</Collapse>
-		</QuestionCardBase>;
+		return (
+			<QuestionCardBase
+				color={this.props.color}
+				// onClick={() => this.setState({ isOpen: !this.state.isOpen })}
+				onClick={this.props.onClick}
+			>
+				<QuestionCardTitleBase>
+					{question.question}
+				</QuestionCardTitleBase>
+				<Collapse isOpen={this.state.isOpen}>{question._id}</Collapse>
+			</QuestionCardBase>
+		);
 	}
 }

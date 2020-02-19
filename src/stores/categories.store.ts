@@ -1,5 +1,5 @@
 import { CategoriesService } from '../services/categories.service';
-import { observable, action } from 'mobx';
+import { action } from 'mobx';
 import { ICategory } from '../interfaces';
 
 export class CategoriesStore {

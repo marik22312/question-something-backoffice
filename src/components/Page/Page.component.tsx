@@ -4,7 +4,7 @@ import { PageBase, PageHeaderBase, PageTitleBase, PageContentBase } from "./Page
 interface Props {}
 interface State {}
 interface PageHeaderProps {
-	title: string;
+	title: string | React.FC;
 }
 
 export class Page extends React.PureComponent<Props, State> {

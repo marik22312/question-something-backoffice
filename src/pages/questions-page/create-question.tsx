@@ -8,8 +8,6 @@ import { Page } from "../../components/Page/Page.component";
 import CSV from 'csvtojson';
 import { DifficultiesStore } from '../../stores/difficulties.store';
 import { CategoriesStore } from '../../stores/categories.store';
-import { IQuestion } from '../../interfaces';
-import { QuestionsPage } from './questions.page';
 import { FullPageLoader } from '../../components/Loaders/FullPageLoader.component';
 
 interface Props extends BrowserRouterProps {
