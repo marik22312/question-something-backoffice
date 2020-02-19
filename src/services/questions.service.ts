@@ -11,6 +11,11 @@ export interface GetQuestionByIdResponse {
 	question: IQuestion;
 }
 
+export interface UpdateQuestionRequest {
+	categories: string[];
+	difficulties: string[];
+}
+
 export class QuestionsService extends BaseApiService {
 	private readonly ENDPOINT: string;
 
@@ -40,8 +45,9 @@ export class QuestionsService extends BaseApiService {
 		return this.ENDPOINT + path;
 	}
 
-	public async update(question: IQuestion): Promise<GetQuestionByIdResponse> {
-		const { data } = await this.put(this.getFullUrl(`/${question._id}`));
+	public async update(id: string, question: UpdateQuestionRequest): Promise<GetQuestionByIdResponse> {
+		const { data } = await this.put(this.getFullUrl(`/${id}`), question);
 		return data;
 	}
 }
+

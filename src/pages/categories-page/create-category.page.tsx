@@ -50,7 +50,7 @@ export class CreateCategoryPage extends React.Component<Props, State> {
 	render() {
 		const { categories } = this.props.categoriesStore;
 		const { difficulties } = this.props.difficultiesStore;
-		const initialValues: ICategory = {
+		const initialValues: any = {
 			key: "",
 			difficulties: [],
 			icon: ""

@@ -37,7 +37,7 @@ const DefaultContainer: React.FC<{
 			<HeaderContainer user={user} logout={identityStore.logout}/>
 			<div>
 				<Switch>
-					<Route path="/" exact component={HomePage} />
+					<Route path="/" exact component={QuestionsPage} />
 					<Route path="/questions" exact component={QuestionsPage} />
 					<Route path="/questions/createbulk" exact component={CreateQuestionPage} />
 					<Route path="/questions/:questionId" exact component={SingleQuestionPage} />

@@ -15,6 +15,7 @@ import {
 } from "reactstrap";
 import { CategoriesStore } from "../../stores/categories.store";
 import { DifficultiesStore } from "../../stores/difficulties.store";
+import { UpdateQuestionRequest } from '../../services/questions.service';
 
 interface Props {
 	match?: any;
@@ -90,8 +91,15 @@ export class SingleQuestionPage extends React.Component<Props, State> {
 		return !!question?.categories.length && !!question.difficulties.length && !isModified;
 	}
 
-	private onSave() {
+	private async onSave() {
 		this.setState({
+			isModified: false
+		});
+
+		const question = await this.props.questionsStore?.update(this.state.question!);
+
+		this.setState({
+			question: question!.question,
 			isModified: false
 		})
 	}
