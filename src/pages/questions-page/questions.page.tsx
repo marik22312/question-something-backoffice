@@ -38,9 +38,9 @@ export class QuestionsPage extends React.Component<Props, State> {
 	}
 
 	render() {
-		const { questions } = this.props.questionsStore;
+		const { questionsStore } = this.props;
 
-		if (!questions.length) {
+		if (!questionsStore.questions.length) {
 			return <FullPageLoader />;
 		}
 		return (
@@ -48,12 +48,13 @@ export class QuestionsPage extends React.Component<Props, State> {
 				<Page.Header title="Questions" />
 				<Page.Body>
 					<div className="d-flex flex-wrap">
-						{questions.map(question => (
+						{questionsStore.questions.map(question => (
 							<QuestionCard
 								onClick={() => this.props.history.push(`/questions/${question._id}`)}
 								color={getRandomColor()}
 								key={question._id}
-								question={question}
+								title={question.question}
+								status={questionsStore.calculateStatusString(question.status!)}
 							/>
 						))}
 					</div>

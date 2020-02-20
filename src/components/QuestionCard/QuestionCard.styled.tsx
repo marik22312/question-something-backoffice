@@ -22,6 +22,7 @@ export const QuestionCardBase = styled.div`
 	}
 `;
 
-export const QuestionCardTitleBase = styled.h1`
-	mix-blend-mode: difference;
+export const QuestionCardTitleBase = styled.h2`
+	color: #dcdcdc;
+	display: inline-block;
 `;

@@ -10,6 +10,12 @@ export interface ICategory {
 	icon: string;
 }
 
+export enum QuestionStatus {
+	NEW = 'NEW',
+	REVIEWED = 'REVIEWED',
+	PUBLISHED = 'PUBLISHED'
+}
+
 export interface IQuestion {
 	_id: string;
 	question: string;
@@ -17,6 +23,7 @@ export interface IQuestion {
 	no_of_dislikes: number;
 	categories: ICategory[];
 	difficulties: IDifficulty[];
+	status?: QuestionStatus; // TODO: remove optionallity
 }
 
 export interface IUser {

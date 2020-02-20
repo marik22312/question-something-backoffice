@@ -15,7 +15,6 @@ import {
 } from "reactstrap";
 import { CategoriesStore } from "../../stores/categories.store";
 import { DifficultiesStore } from "../../stores/difficulties.store";
-import { UpdateQuestionRequest } from '../../services/questions.service';
 
 interface Props {
 	match?: any;

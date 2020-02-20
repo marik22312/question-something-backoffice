@@ -1,18 +1,18 @@
 import { QuestionsService, UpdateQuestionRequest } from '../services/questions.service';
 import { observable, action } from 'mobx';
-import { IQuestion } from '../interfaces';
+import { IQuestion, QuestionStatus } from '../interfaces';
 
 export class QuestionsStore {
 
 	private readonly api: QuestionsService;
+
+	@observable
 	public questions: IQuestion[];
 	constructor(questionsService: QuestionsService) {
 		this.api = questionsService;
 
 		this.questions = [];
 	}
-
-	@observable
 
 	@action
 	public async init() {
@@ -37,6 +37,15 @@ export class QuestionsStore {
 	public async BulkCreate(questions: any[]) {
 		return this.api.bulkCreate(questions);
 	}
+
+	public calculateStatusString(status: QuestionStatus): string {
+		const statuses = {
+			[QuestionStatus.NEW]: 'New!',
+			[QuestionStatus.REVIEWED]: 'Reviewed!',
+			[QuestionStatus.PUBLISHED]: 'Published!',
+		}
+	return statuses[status];
+}
 	
 	private getAll() {
 		return this.api.getAll();

@@ -1,15 +1,14 @@
 import * as React from "react";
 import { QuestionCardBase, QuestionCardTitleBase } from "./QuestionCard.styled";
-import { IQuestion } from "../../interfaces";
-import { Collapse } from "reactstrap";
+import { Badge } from "reactstrap";
 
 interface Props {
-	question: IQuestion;
 	color: string;
+	status?: string;
+	title: string;
 	onClick?(e: any): void;
 }
 interface State {
-	isOpen: boolean;
 }
 
 export class QuestionCard extends React.PureComponent<Props, State> {
@@ -17,22 +16,20 @@ export class QuestionCard extends React.PureComponent<Props, State> {
 		super(props);
 
 		this.state = {
-			isOpen: false
 		};
 	}
 
 	public render() {
-		const { question } = this.props;
+		const { status, title } = this.props;
 		return (
 			<QuestionCardBase
 				color={this.props.color}
-				// onClick={() => this.setState({ isOpen: !this.state.isOpen })}
 				onClick={this.props.onClick}
 			>
 				<QuestionCardTitleBase>
-					{question.question}
+					{title}&nbsp;
+					{status && <Badge>{status}</Badge>}
 				</QuestionCardTitleBase>
-				<Collapse isOpen={this.state.isOpen}>{question._id}</Collapse>
 			</QuestionCardBase>
 		);
 	}
