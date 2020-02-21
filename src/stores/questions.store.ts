@@ -44,7 +44,7 @@ export class QuestionsStore {
 			[QuestionStatus.REVIEWED]: 'Reviewed!',
 			[QuestionStatus.PUBLISHED]: 'Published!',
 		}
-	return statuses[status];
+	return statuses[status] || 'New!';
 }
 	
 	private getAll() {

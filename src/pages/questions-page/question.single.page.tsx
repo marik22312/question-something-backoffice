@@ -11,7 +11,8 @@ import {
 	DropdownMenu,
 	DropdownItem,
 	DropdownToggle,
-	Button
+	Button,
+	Badge
 } from "reactstrap";
 import { CategoriesStore } from "../../stores/categories.store";
 import { DifficultiesStore } from "../../stores/difficulties.store";
@@ -200,12 +201,24 @@ export class SingleQuestionPage extends React.Component<Props, State> {
 		);
 	}
 
-	public render() {
+	private getTitle(): any {
 		const { question } = this.state;
+
+		if (!question) {
+			return 'Loading...';
+		}
+
+		return <React.Fragment>
+			{question.question}&nbsp;<Badge>{this.props.questionsStore?.calculateStatusString(question.status!)}</Badge>
+		</React.Fragment>
+
+	}
+
+	public render() {
 		return (
 			<Page>
 				<Page.Header
-					title={question ? question.question : "Loading..."}
+					title={this.getTitle()}
 				/>
 				<Page.Body>{this.renderContent()}</Page.Body>
 			</Page>
