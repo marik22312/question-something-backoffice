@@ -54,5 +54,11 @@ export class QuestionsService extends BaseApiService {
 		const { data } = await this.post(this.getFullUrl(`/${id}`));
 		return data;
 	}
+	
+	public async search(query: string): Promise<IQuestion[]> {
+		const { data } = await this.get(this.getFullUrl(`/?text=${query}`));
+		return data.questions;
+		
+	}
 }
 

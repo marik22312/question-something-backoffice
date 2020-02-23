@@ -2,6 +2,8 @@ import { QuestionsService, UpdateQuestionRequest } from '../services/questions.s
 import { observable, action } from 'mobx';
 import { IQuestion, QuestionStatus } from '../interfaces';
 
+import debounce from 'lodash/debounce';
+
 export class QuestionsStore {
 
 	private readonly api: QuestionsService;
@@ -63,6 +65,12 @@ export class QuestionsStore {
 	private getAll() {
 		return this.api.getAll();
 	}
+
+	@action
+	public search = debounce(async query => {
+		const questions = await this.api.search(query);
+		this.questions = questions;
+	}, 300)
 
 		
 	private convertQuestionToUpdateObject = (question: IQuestion): UpdateQuestionRequest => {
