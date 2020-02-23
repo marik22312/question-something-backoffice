@@ -38,6 +38,19 @@ export class QuestionsStore {
 		return this.api.bulkCreate(questions);
 	}
 
+	@action
+	public async publish(question: IQuestion) {
+		if (question.status === QuestionStatus.NEW) {
+			return null;
+		}
+
+		if (!question.categories.length || !question.difficulties.length) {
+			return null;
+		}
+
+		return await this.api.publish(question._id);
+	}
+
 	public calculateStatusString(status: QuestionStatus): string {
 		const statuses = {
 			[QuestionStatus.NEW]: 'New!',

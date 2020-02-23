@@ -4,7 +4,12 @@ import {} from "react-router-dom";
 import { Page } from "../../components/Page/Page.component";
 import { QuestionsStore } from "../../stores/questions.store";
 import { FullPageLoader } from "../../components/Loaders/FullPageLoader.component";
-import { IQuestion, ICategory, IDifficulty } from "../../interfaces";
+import {
+	IQuestion,
+	ICategory,
+	IDifficulty,
+	QuestionStatus
+} from "../../interfaces";
 import { Tag } from "../../components/Tags/Tag.component";
 import {
 	Dropdown,
@@ -24,6 +29,7 @@ interface Props {
 	difficultiesStore?: DifficultiesStore;
 }
 interface State {
+	questionLoaded: boolean;
 	isLoading: boolean;
 	question: IQuestion | null;
 	isModified: boolean;
@@ -38,7 +44,8 @@ export class SingleQuestionPage extends React.Component<Props, State> {
 		super(props);
 
 		this.state = {
-			isLoading: true,
+			questionLoaded: false,
+			isLoading: false,
 			error: null,
 			question: null,
 			isModified: false,
@@ -83,12 +90,17 @@ export class SingleQuestionPage extends React.Component<Props, State> {
 		}
 
 		const question = response?.question;
-		this.setState({ question, isLoading: false });
+		this.setState({ question, questionLoaded: true });
 	}
 
 	private canPublish() {
 		const { question, isModified } = this.state;
-		return !!question?.categories.length && !!question.difficulties.length && !isModified;
+		return (
+			!!question?.categories.length &&
+			!!question.difficulties.length &&
+			!isModified &&
+			question.status === QuestionStatus.REVIEWED
+		);
 	}
 
 	private async onSave() {
@@ -96,12 +108,14 @@ export class SingleQuestionPage extends React.Component<Props, State> {
 			isModified: false
 		});
 
-		const question = await this.props.questionsStore?.update(this.state.question!);
+		const question = await this.props.questionsStore?.update(
+			this.state.question!
+		);
 
 		this.setState({
 			question: question!.question,
 			isModified: false
-		})
+		});
 	}
 
 	private addCategory(category: ICategory) {
@@ -117,15 +131,38 @@ export class SingleQuestionPage extends React.Component<Props, State> {
 	}
 
 	private filterCategories(category: ICategory) {
-		return !this.state.question?.categories.includes(category)
+		return !this.state.question?.categories.includes(category);
 	}
 	private filterDifficulties(difficulty: IDifficulty) {
-		return !this.state.question?.difficulties.includes(difficulty)
+		return !this.state.question?.difficulties.includes(difficulty);
+	}
+
+	private async publish() {
+		const { question } = this.state;
+		const { questionsStore } = this.props;
+		this.setState({
+			isLoading: true
+		});
+
+		const publishedQuestion = await questionsStore?.publish(question!);
+
+		if (!publishedQuestion) {
+			this.setState({
+				isLoading: false,
+				error: 'Cant publish!'
+			})
+		}
+
+		this.setState({
+			question: publishedQuestion!.question,
+			error: null,
+			isLoading: false
+		});
 	}
 
 	private renderContent() {
 		const { question } = this.state;
-		if (this.state.isLoading || !question) {
+		if (!this.state.questionLoaded || !question) {
 			return <FullPageLoader />;
 		}
 
@@ -145,8 +182,11 @@ export class SingleQuestionPage extends React.Component<Props, State> {
 					>
 						<DropdownToggle caret>Add Category</DropdownToggle>
 						<DropdownMenu>
-							{this.props.categoriesStore?.categories.filter(category => this.filterCategories(category)).map(
-								category => (
+							{this.props.categoriesStore?.categories
+								.filter(category =>
+									this.filterCategories(category)
+								)
+								.map(category => (
 									<DropdownItem
 										key={category._id}
 										onClick={() =>
@@ -155,8 +195,7 @@ export class SingleQuestionPage extends React.Component<Props, State> {
 									>
 										{category.key}
 									</DropdownItem>
-								)
-							)}
+								))}
 						</DropdownMenu>
 					</Dropdown>
 				</div>
@@ -174,8 +213,11 @@ export class SingleQuestionPage extends React.Component<Props, State> {
 					>
 						<DropdownToggle caret>Add Difficulty</DropdownToggle>
 						<DropdownMenu>
-							{this.props.difficultiesStore?.difficulties.filter(difficulty => this.filterDifficulties(difficulty)).map(
-								difficulty => (
+							{this.props.difficultiesStore?.difficulties
+								.filter(difficulty =>
+									this.filterDifficulties(difficulty)
+								)
+								.map(difficulty => (
 									<DropdownItem
 										key={difficulty._id}
 										onClick={() =>
@@ -184,17 +226,26 @@ export class SingleQuestionPage extends React.Component<Props, State> {
 									>
 										{difficulty.key}
 									</DropdownItem>
-								)
-							)}
+								))}
 						</DropdownMenu>
 					</Dropdown>
 				</div>
 				<div className="mt-5 d-flex justify-content-left">
 					<div className="mr-2">
-					<Button disabled={!this.state.isModified} onClick={() => this.onSave()}>Save</Button>
+						<Button
+							disabled={!this.state.isModified}
+							onClick={() => this.onSave()}
+						>
+							Save
+						</Button>
 					</div>
 					<div className="mr-2">
-					<Button disabled={!this.canPublish()}>Publish</Button>
+						<Button
+							disabled={!this.canPublish()}
+							onClick={() => this.publish()}
+						>
+							Publish
+						</Button>
 					</div>
 				</div>
 			</React.Fragment>
@@ -205,21 +256,25 @@ export class SingleQuestionPage extends React.Component<Props, State> {
 		const { question } = this.state;
 
 		if (!question) {
-			return 'Loading...';
+			return "Loading...";
 		}
 
-		return <React.Fragment>
-			{question.question}&nbsp;<Badge>{this.props.questionsStore?.calculateStatusString(question.status!)}</Badge>
-		</React.Fragment>
-
+		return (
+			<React.Fragment>
+				{question.question}&nbsp;
+				<Badge>
+					{this.props.questionsStore?.calculateStatusString(
+						question.status!
+					)}
+				</Badge>
+			</React.Fragment>
+		);
 	}
 
 	public render() {
 		return (
 			<Page>
-				<Page.Header
-					title={this.getTitle()}
-				/>
+				<Page.Header title={this.getTitle()} />
 				<Page.Body>{this.renderContent()}</Page.Body>
 			</Page>
 		);

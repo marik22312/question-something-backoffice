@@ -49,5 +49,10 @@ export class QuestionsService extends BaseApiService {
 		const { data } = await this.put(this.getFullUrl(`/${id}`), question);
 		return data;
 	}
+
+	public async publish(id: string): Promise<GetQuestionByIdResponse> {
+		const { data } = await this.post(this.getFullUrl(`/${id}`));
+		return data;
+	}
 }
 
